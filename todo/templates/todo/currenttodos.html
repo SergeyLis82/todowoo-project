@@ -1,0 +1,7 @@
+{% extends 'todo/_base.html' %}
+
+{% block content %}
+    {% csrf_token %}
+    <h4>{{ user.username }} {{ heading }}</h4>
+   
+{% endblock %}
