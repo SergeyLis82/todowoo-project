@@ -1,0 +1,14 @@
+{% extends 'todo/_base.html' %}
+
+{% block content %}
+    {% csrf_token %}
+    <h4>{{ user.username }}</h4>
+   
+    <h4>{{ todo.title }}</h4>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+
+{% endblock %}

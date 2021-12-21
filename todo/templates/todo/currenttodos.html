@@ -7,8 +7,10 @@
     <ul>
         {% for task in todos %}
         <li>
+            <a href="{% url 'view_todo' task.id %}">
             {% if task.important %}<b>{% endif %}{{ task.title }}{% if task.important %}</b>{% endif %}
             {% if task.memo %} - {{ task.memo }}{% endif %}
+            </a>
         </li>
         {% endfor %}
     </ul>
