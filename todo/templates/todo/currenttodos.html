@@ -4,4 +4,13 @@
     {% csrf_token %}
     <h4>{{ user.username }} {{ heading }}</h4>
    
+    <ul>
+        {% for task in todos %}
+        <li>
+            {% if task.important %}<b>{% endif %}{{ task.title }}{% if task.important %}</b>{% endif %}
+            {% if task.memo %} - {{ task.memo }}{% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+
 {% endblock %}

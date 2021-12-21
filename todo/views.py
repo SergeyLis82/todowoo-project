@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
 from .forms import TodoForm
+from .models import tasktodo
 
 def home(request):
     content = {
@@ -76,8 +77,11 @@ def create_todos(request):
             return render(request, 'todo/createtodo.html', content)
 
 def current_todos(request):
+    todos = tasktodo.objects.filter(user = request.user)
+    
     content = {
         'title': "ToDo's",
         'heading': " - todo's",
+        'todos': todos,
     }
     return render(request, 'todo/currenttodos.html', content)
