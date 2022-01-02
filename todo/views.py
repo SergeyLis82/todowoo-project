@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
+from django.utils import timezone
 from .forms import TodoForm
 from .models import tasktodo
 
@@ -78,7 +79,7 @@ def create_todos(request):
             return render(request, 'todo/createtodo.html', content)
 
 def current_todos(request):
-    todos = tasktodo.objects.filter(user = request.user)
+    todos = tasktodo.objects.filter(user = request.user, completed__isnull=True)
     
     content = {
         'title': "ToDo's",
@@ -102,3 +103,10 @@ def view_todo(request, todo_pk):
         except ValueError:
             content['error'] = 'Bad info'
             return render(request, 'todo/tododetail.html', content)
+
+def complete_todo(request, todo_pk):
+    todo = get_object_or_404(tasktodo, pk=todo_pk, user=request.user)
+    if request.method == "POST":
+        todo.completed = timezone.now()
+        todo.save()
+        return redirect('current_todos')
